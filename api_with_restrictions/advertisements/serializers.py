@@ -35,7 +35,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
             creator = Advertisement.objects.get(id=self.instance.pk).creator_id
         elif self.context['request'].method == 'POST':
             creator = self.context["request"].user.id
-        count = len(Advertisement.objects.all().filter(creator_id=creator, status='OPEN'))
+        count = Advertisement.objects.all().filter(creator_id=creator, status='OPEN').count()
         if count > 9:
             if  self.context['request'].method == 'POST' and data['status'] == 'OPEN' or\
                 self.context['request'].method in ('PATCH', 'PUT') and\
